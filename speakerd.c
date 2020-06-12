@@ -7,12 +7,12 @@
 
 void speekertalk(unsigned int count)
 {
-  if (count>0 && count<32000)
+  if (count > 0 && count < 32000)
   {
     outb_p(inb_p(0x61) | 3, 0x61);
     outb_p(0xB6, 0x43);
-    outb_p(count & 0xff, 0x42);
-    outb((count >> 8) & 0xff, 0x42);
+    outb_p(count & 0xFF, 0x42);
+    outb((count >> 8) & 0xFF, 0x42);
   }
   else
     outb(inb_p(0x61) & 0xFC, 0x61);
@@ -22,24 +22,20 @@ int main(void)
 {
   char ch;
   int i;
-  int count=0;
+  int count = 0;
 
   if (iopl(3)) 
   {
     fprintf(stderr,"You need to be root to run speakerd.\n");
     return EXIT_FAILURE;
   }
-  while(fread((void*)&ch,sizeof(char),1,stdin))
+  while (fread((void*)&ch, sizeof(char), 1, stdin))
   {
-    if (ch>='0' && ch<='9')
-    {
-      count*=10;
-      count+=(ch-'0');
-    } 
-    else
-    {
-      switch(ch)
-      {
+    if (ch >= '0' && ch <= '9') {
+      count *= 10;
+      count += (ch - '0');
+    } else {
+      switch(ch) {
         case '.':
           speekertalk(0);
           exit(EXIT_SUCCESS);
@@ -52,9 +48,11 @@ int main(void)
         default:
           break;  
       }
-      count=0;
+      count = 0;
     }
   }
   speekertalk(0);
   exit(EXIT_SUCCESS);
 }
+
+/* vim:set ts=2 sts=2 sw=2 et:*/
