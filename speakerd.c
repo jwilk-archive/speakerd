@@ -5,6 +5,10 @@
 #include <string.h>
 #include <sys/io.h>
 
+/* Copyright © 2003-2020 Jakub Wilk <jwilk@jwilk.net>
+ * SPDX-License-Identifier: MIT
+ */
+
 void speekertalk(unsigned int count)
 {
   if (count > 0 && count < 32000)
